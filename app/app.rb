@@ -12,7 +12,7 @@ class BeamMeUp < Padrino::Application
 
   post '/', :provides => :json do
     if params[:upload] && (tmpfile = params[:upload][:tempfile]) && (name = params[:upload][:filename])
-      File.open(File.join(Dir.pwd,"public/uploads", name), "wb") { |f| f.write(tmpfile.read) }
+      File.open(File.join(Dir.pwd,"/home/adam/downloads/_watch", name), "wb") { |f| f.write(tmpfile.read) }
 
       return {:success => "File uploaded"}.to_json
     end
