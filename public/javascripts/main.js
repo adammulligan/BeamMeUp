@@ -4,21 +4,19 @@ $(function(){
 		  message = $('.message', dropbox);
 	
 	dropbox.filedrop({
-		// The name of the $_FILES entry:
-		paramname:'upload',
+		paramname: 'upload',
 		
-		maxfiles: 5,
-    maxfilesize: 2,
+    maxfilesize: 20,
 		url: '/',
 		
-		uploadFinished:function(i,file,response){
+		uploadFinished: function(i,file,response){
 			$.data(file).addClass('done');
 		},
 		
     error: function(err, file) {
 			switch(err) {
 				case 'BrowserNotSupported':
-					showMessage('Your browser does not support HTML5 file uploads!');
+					alert('Your browser does not support HTML5 file uploads!');
 					break;
 				case 'TooManyFiles':
 					alert('Too many files! Please select 5 at most! (configurable)');
@@ -32,6 +30,7 @@ $(function(){
 		},
 		
 		uploadStarted:function(i, file, len){
+      message.hide();
 			createImage(file);
 		},
 
@@ -46,18 +45,10 @@ $(function(){
 	
 	
 	function createImage(file){
+		var preview = $(template);
 
-		var preview = $(template), 
-	      image = $('img', preview);
-			
-		message.hide();
 		preview.appendTo(dropbox);
-		
 		$.data(file,preview);
-	}
-
-	function showMessage(msg){
-		message.html(msg);
 	}
 
 });

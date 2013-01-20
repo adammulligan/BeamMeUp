@@ -24,8 +24,9 @@
     %div= haml :navbar
 
     .container{ :style => 'margin-top: 60px' }
-      %h1 Torrent Upload
-
       %form(method="post" enctype='multipart/form-data')
         #dropbox
           %span.message Drop torrent files here to upload
+        %p
+          %input{ :type => "file", :name => "upload"}
+          %button.btn.btn-primary{ :type => "submit" } Submit
