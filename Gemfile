@@ -13,6 +13,8 @@ gem 'haml'
 gem 'activerecord', :require => "active_record"
 gem 'sqlite3'
 
+gem 'httparty'
+
 # Test requirements
 
 # Padrino Stable Gem
