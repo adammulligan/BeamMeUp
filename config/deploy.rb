@@ -54,11 +54,11 @@ namespace :god do
   desc "Start god"
   task :start do
     config_file = "#{current_path}/config/unicorn.god"
-    run "#{god_command} -c #{config_file}", :env => { PAD_ROOT: "#{deploy_to}/current"
+    run "#{god_command} -c #{config_file}", :env => { PAD_ROOT: "#{deploy_to}/current" }
   end
 end
 
-efore "deploy:update", "god:terminate_if_running"
+before "deploy:update", "god:terminate_if_running"
 after "deploy:update", "god:start"
 
 after 'deploy:update_code', 'deploy:symlink_shared'
