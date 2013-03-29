@@ -27,24 +27,38 @@ set :rails_env, :production
 
 # Where will it be located on a server?
 set :deploy_to, "/var/www/upload.kobayashi.cyanoryx.com/#{application}"
-set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
-set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
 
 # Unicorn control tasks
 namespace :deploy do
-  task :restart do
-    run "if [ -f #{unicorn_pid} ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to}/current && bundle exec unicorn -c #{unicorn_conf} -E #{rails_env} -D; fi"
-  end
-  task :start do
-    run "cd #{deploy_to}/current && bundle exec unicorn -c #{unicorn_conf} -E #{rails_env} -D"
-  end
-  task :stop do
-    run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
-  end
-
   task :symlink_shared do
     run "ln -nfs #{shared_path}/config/apps.rb #{release_path}/config/apps.rb"
   end
 end
+
+namespace :god do
+  def god_is_running
+    !capture("#{god_command} status >/dev/null 2>/dev/null || echo 'not running'").start_with?('not running')
+  end
+
+  def god_command
+    "cd #{current_path}; bundle exec god"
+  end
+
+  desc "Stop god"
+  task :terminate_if_running do
+    if god_is_running
+      run "#{god_command} terminate"
+    end
+  end
+
+  desc "Start god"
+  task :start do
+    config_file = "#{current_path}/config/unicorn.god"
+    run "#{god_command} -c #{config_file}", :env => { PAD_ROOT: "#{deploy_to}/current"
+  end
+end
+
+efore "deploy:update", "god:terminate_if_running"
+after "deploy:update", "god:start"
 
 after 'deploy:update_code', 'deploy:symlink_shared'
