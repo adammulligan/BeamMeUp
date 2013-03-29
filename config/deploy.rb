@@ -47,7 +47,7 @@ namespace :god do
   desc "Stop god"
   task :terminate_if_running do
     if god_is_running
-      run "#{god_command} terminate"
+      run "if [ -f #{deploy_to}/current ]; then #{god_command} terminate; fi"
     end
   end
 
