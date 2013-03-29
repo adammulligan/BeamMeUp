@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'unicorn'
+gem 'capistrano'
+gem 'rvm-capistrano'
 
 gem 'rake'
 gem 'sinatra-flash', :require => 'sinatra/flash'
