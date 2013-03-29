@@ -41,4 +41,8 @@ namespace :deploy do
   task :stop do
     run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
   end
+
+  task :symlink_shared do
+    run "ln -nfs #{shared_path}/config/apps.rb #{release_path}/config/apps.rb"
+  end
 end
