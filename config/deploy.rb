@@ -46,3 +46,5 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/apps.rb #{release_path}/config/apps.rb"
   end
 end
+
+after 'deploy:update_code', 'deploy:symlink_shared'
