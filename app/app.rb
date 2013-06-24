@@ -6,6 +6,10 @@ class BeamMeUp < Padrino::Application
 
   require 'httparty'
 
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
+
   get "/" do
     haml :index
   end
