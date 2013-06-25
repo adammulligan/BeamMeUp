@@ -19,7 +19,7 @@
       'width': '100%',
       'height': '50px',
       'background': 'white',
-      'opacity': '0.5',
+      'opacity': '0.75',
       'font-size': '35px',
       'font-weight': 'bold',
       'font-family': 'Helvetica',
