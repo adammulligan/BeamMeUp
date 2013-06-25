@@ -6,9 +6,13 @@
     x.open("POST", "http://upload.kobayashi.cyanoryx.com/", true);
     x.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-    var status_div = document.createElement('div');
+    var status_div = document.getElementById('kobayashi_upload_status') || document.createElement('div');
     status_div.setAttribute('id', 'kobayashi_upload_status');
-    document.body.appendChild(status_div);
+
+    if (!document.contains(status_div)) {
+      document.body.appendChild(status_div);
+    }
+
     status_div.innerHTML = 'Saving...';
 
     styles = {
